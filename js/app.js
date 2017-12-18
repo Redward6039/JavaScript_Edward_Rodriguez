@@ -5,7 +5,7 @@ var Calculadora={
   dos: 0,
   tres: 0,
   resultado: 0,
-  operacion: " ",
+  operacion: "",
   botonIgualdad: false,
 
   init: (function() {
@@ -73,7 +73,7 @@ var Calculadora={
 		document.getElementById("on").addEventListener("click", function() {Calculadora.borrarPantalla();});
 		document.getElementById("sign").addEventListener("click", function() {Calculadora.CambioDeSigno();});
 		document.getElementById("punto").addEventListener("click", function() {Calculadora.numeroDecimal();});
-		document.getElementById("igual").addEventListener("click", function() {Calculadora.verResultado();});
+		document.getElementById("igual").addEventListener("click", function() {Calculadora.mostrarResultado();});
 		document.getElementById("raiz").addEventListener("click", function() {Calculadora.añadirOperacion("raiz");});
 		document.getElementById("dividido").addEventListener("click", function() {Calculadora.añadirOperacion("/");});
 		document.getElementById("por").addEventListener("click", function() {Calculadora.añadirOperacion("*");});
@@ -90,7 +90,7 @@ var Calculadora={
 		this.resultado = 0;
 		this.Operación = "";
 		this.botonIgualdad = false;
-		this.ultimoValor = 0;
+		this.tres = 0;
 		this.actualizarVisor();
   },
   //cambio de signo
@@ -138,7 +138,25 @@ var Calculadora={
 		this.actualizarVisor();
   },
 
+  mostrarResultado: function() {
+    if(!this.botonIgualdad){
+			this.dos = parseFloat(this.pantallaValor);
+			this.tres = this.dos;
+			this.operacionAritmetica(this.uno, this.dos, this.operacion);
+		} else {
+		this.operacionAritmetica(this.uno, this.tres, this.operacion);
+		}
 
+		this.uno = this.resultado;
+		this.pantallaValor = "";
+		if (this.resultado.toString().length < 9){
+			this.pantallaValor = this.resultado.toString();
+		} else {
+			this.pantallaValor = this.resultado.toString().slice(0,8) + "...";
+		}
+		this.botonIgualdad = true;
+		this.actualizarVisor();
+  },
 
 };
 
