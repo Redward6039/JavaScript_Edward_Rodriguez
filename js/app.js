@@ -1,49 +1,45 @@
 var Calculadora={
   pantallaCalculadora: document.getElementById("display"),
-  pantallaValor: "0",
+  /*var globales*/
   uno: 0,
   dos: 0,
   tres: 0,
   resultado: 0,
+  pantallaValor: "0",
   operacion: "",
   botonIgualdad: false,
 
-  init: (function() {
-    this.añadirEventosBotones(".tecla");
-    this.añadirEventosFuncion();
-  }),
-
-  //metodo reducir tamaño botones
-  reducirBotones: function(elemento) {
+  /*metodo reducir tamaño botones*/
+  reducirBotones: function(e) {
     var a = elemento.id;
     if (a=="1" || a=="2" || a=="3" || a=="igual" || a=="0" || a=="punto"){
-      elemento.style.width = "28%";
-      elemento.style.height = "62px";
+      e.style.width = "27%";
+      e.style.height = "61px";
     }else if (a=="mas") {
-      elemento.style.width = "88%";
-      elemento.style.height = "98%";
+      e.style.width = "87%";
+      e.style.height = "97%";
     }else {
-      elemento.style.width = "21%";
-      elemento.style.height = "62px"
+      e.style.width = "20%";
+      e.style.height = "61px"
     }
   },
 
-  //metodo aumentar botones
+  /*metodo aumentar botones*/
   aumentarBotones: function(elemento) {
     var a = elemento.id;
     if (a=="1" || a=="2" || a=="3" || a=="igual" || a=="0" || a=="punto"){
-      elemento.style.width = "29%";
-      elemento.style.height = "62.91px";
+      elemento.style.width = "28%";
+      elemento.style.height = "61.92px";
     }else if (a=="mas") {
-      elemento.style.width = "90%";
+      elemento.style.width = "91%";
       elemento.style.height = "100%";
     }else {
-      elemento.style.width = "22%";
-      elemento.style.height = "62.91px";
+      elemento.style.width = "21%";
+      elemento.style.height = "61.91px";
     }
   },
 
-  //Eventos
+  /*Eventos al reducir y aumentar botones*/
   eventoReducirBotones: function(evento) {
     Calculadora.reducirBotones(evento.target);
   },
@@ -53,12 +49,14 @@ var Calculadora={
 
   añadirEventosBotones: function(selector) {
     var a = document.querySelectorAll(selector);
-    for (var i = 0; i<a.length;i++){
+    var i;
+    for (i = 0; i<a.length;i++){
       a[i].onmouseover = this.eventoReducirBotones;
       a[i].onmouseover = this.eventoAumentarBotones;
     };
   },
 
+  /*aqui se le añade los las funciones a los botones*/
   añadirEventosFuncion: function() {
     document.getElementById("0").addEventListener("click", function() {Calculadora.añadirNumero("0");});
     document.getElementById("1").addEventListener("click", function() {Calculadora.añadirNumero("1");});
@@ -81,7 +79,7 @@ var Calculadora={
 		document.getElementById("mas").addEventListener("click", function() {Calculadora.añadirOperacion("+");});
   },
 
-  //teclas de la calculadora
+  /*teclas de la calculadora*/
   borrarPantalla: function() {
     this.pantallaValor = "0";
     this.operacion = "";
@@ -93,7 +91,7 @@ var Calculadora={
 		this.tres = 0;
 		this.actualizarVisor();
   },
-  //cambio de signo
+  /*cambio de signo*/
   CambioDeSigno: function() {
     if (this.pantallaValor !="0") {
 			var auxiliar;
@@ -108,6 +106,7 @@ var Calculadora={
 		}
   },
 
+  /*permite la funcion de numeros decimales*/
   numeroDecimal: function() {
     if (this.pantallaValor.indexOf(".")== -1) {
 			if (this.pantallaValor == ""){
@@ -131,7 +130,7 @@ var Calculadora={
   },
 
   añadirOperacion: function(o) {
-    this.uno = parseFloat(this.valorVisor);
+    this.uno = parseFloat(this.pantallaValor);
 		this.pantallaValor = "";
 		this.operacion = o;
 		this.botonIgualdad = false;
@@ -178,6 +177,12 @@ var Calculadora={
 
     }
   },
+
+  init: (function() {
+    this.añadirEventosBotones(".tecla");
+    this.añadirEventosFuncion();
+  }),
+
 
   actualizarVisor: function() {
     this.pantallaCalculadora.innerHTML = this.pantallaValor;
