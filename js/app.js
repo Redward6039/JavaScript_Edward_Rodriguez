@@ -60,9 +60,86 @@ var Calculadora={
   },
 
   añadirEventosFuncion: function() {
-    document.getElementById("0").addEventListener("click", function() {Calculadora.ingresoNumero("0");});
-    document.getElementById("1").addEventListener("click", function() {Calculadora.ingresoNumero("1");});
-  }
+    document.getElementById("0").addEventListener("click", function() {Calculadora.añadirNumero("0");});
+    document.getElementById("1").addEventListener("click", function() {Calculadora.añadirNumero("1");});
+    document.getElementById("2").addEventListener("click", function() {Calculadora.añadirNumero("2");});
+		document.getElementById("3").addEventListener("click", function() {Calculadora.añadirNumero("3");});
+		document.getElementById("4").addEventListener("click", function() {Calculadora.añadirNumero("4");});
+		document.getElementById("5").addEventListener("click", function() {Calculadora.añadirNumero("5");});
+		document.getElementById("6").addEventListener("click", function() {Calculadora.añadirNumero("6");});
+		document.getElementById("7").addEventListener("click", function() {Calculadora.añadirNumero("7");});
+		document.getElementById("8").addEventListener("click", function() {Calculadora.añadirNumero("8");});
+		document.getElementById("9").addEventListener("click", function() {Calculadora.añadirNumero("9");});
+		document.getElementById("on").addEventListener("click", function() {Calculadora.borrarPantalla();});
+		document.getElementById("sign").addEventListener("click", function() {Calculadora.CambioDeSigno();});
+		document.getElementById("punto").addEventListener("click", function() {Calculadora.numeroDecimal();});
+		document.getElementById("igual").addEventListener("click", function() {Calculadora.verResultado();});
+		document.getElementById("raiz").addEventListener("click", function() {Calculadora.añadirOperacion("raiz");});
+		document.getElementById("dividido").addEventListener("click", function() {Calculadora.añadirOperacion("/");});
+		document.getElementById("por").addEventListener("click", function() {Calculadora.añadirOperacion("*");});
+		document.getElementById("menos").addEventListener("click", function() {Calculadora.añadirOperacion("-");});
+		document.getElementById("mas").addEventListener("click", function() {Calculadora.añadirOperacion("+");});
+  },
+
+  //teclas de la calculadora
+  borrarPantalla: function() {
+    this.pantallaValor = "0";
+    this.operacion = "";
+		this.uno = 0;
+		this.dos = 0;
+		this.resultado = 0;
+		this.Operación = "";
+		this.botonIgualdad = false;
+		this.ultimoValor = 0;
+		this.actualizarVisor();
+  },
+  //cambio de signo
+  CambioDeSigno: function() {
+    if (this.pantallaValor !="0") {
+			var auxiliar;
+			if (this.pantallaValor.charAt(0)=="-") {
+				auxiliar = this.pantallaValor.slice(1);
+			}	else {
+				auxiliar = "-" + this.pantallaValor;
+			}
+		this.pantallaValor = "";
+		this.pantallaValor = auxiliar;
+		this.actualizarVisor();
+		}
+  },
+
+  numeroDecimal: function() {
+    if (this.pantallaValor.indexOf(".")== -1) {
+			if (this.pantallaValor == ""){
+				this.pantallaValor = this.pantallaValor + "0.";
+			} else {
+				this.pantallaValor = this.pantallaValor + ".";
+			}
+			this.actualizarVisor();
+		}
+  },
+  añadirNumero: function(valor) {
+    if (this.pantallaValor.length < 8) {
+			if (this.pantallaValor=="0") {
+				this.pantallaValor = "";
+				this.pantallaValor = this.pantallaValor + valor;
+			} else {
+				this.pantallaValor = this.pantallaValor + valor;
+			}
+		this.actualizarVisor();
+		}
+  },
+
+  añadirOperacion: function(o) {
+    this.uno = parseFloat(this.valorVisor);
+		this.pantallaValor = "";
+		this.operacion = o;
+		this.botonIgualdad = false;
+		this.actualizarVisor();
+  },
+
+
+
 };
 
 Calculadora.init();
