@@ -126,7 +126,7 @@ var Calculadora={
 			} else {
 				this.pantallaValor = this.pantallaValor + valor;
 			}
-		this.actualizarVisor();
+		  this.actualizarVisor();
 		}
   },
 
@@ -158,6 +158,30 @@ var Calculadora={
 		this.actualizarVisor();
   },
 
+  operacionAritmetica: function(uno, dos, operacion) {
+    switch (operacion) {
+      case "+":
+        this.resultado = eval(uno + dos);
+        break;
+      case "-":
+        this.resultado = eval(uno - dos);
+        break;
+      case "*":
+        this.resultado = eval(uno * dos);
+        break;
+      case "/":
+        this.resultado = eval(uno / dos)
+        break;
+      case "raiz":
+        this.resultado = eval(Math.sqrt(uno));
+        break;
+
+    }
+  },
+
+  actualizarVisor: function() {
+    this.pantallaCalculadora.innerHTML = this.pantallaValor;
+  }
 };
 
 Calculadora.init();
